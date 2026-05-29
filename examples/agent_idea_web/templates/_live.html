@@ -1,0 +1,50 @@
+{# The polling fragment. While pending it returns ITSELF (keeps the hx-trigger, so
+   HTMX keeps polling). When done/errored it drops the trigger, so polling stops. #}
+{% set labels = {
+  "queued": "Queued…",
+  "researching": "🔬 Researching the domain…",
+  "writing": "✍️ Writing it up…",
+  "drawing": "🎨 Drawing the diagram…",
+  "done": "Done",
+} %}
+{% if idea.status == "pending" %}
+<div id="live" hx-get="/agentidea/{{ idea.id }}/fragment" hx-trigger="every 2s" hx-swap="outerHTML">
+  <div class="flex items-center gap-3 text-lg">
+    <span class="inline-block size-5 animate-spin rounded-full border-2 border-slate-700 border-t-sky-400"></span>
+    <span class="font-semibold">{{ labels.get(idea.stage, idea.stage) }}</span>
+  </div>
+</div>
+{% elif idea.status == "error" %}
+<div id="live">
+  <p class="text-red-400">😬 Something went wrong: {{ idea.error }}</p>
+  <p class="mt-2"><a href="/" class="text-sky-400 hover:underline">Try again →</a></p>
+</div>
+{% else %}
+<div id="live">
+  <article class="space-y-4">
+    <h2 class="text-2xl font-bold">{{ idea.title }}</h2>
+    {% if idea.image_url %}
+    <img src="{{ idea.image_url }}" alt="A diagram of the idea"
+         class="w-full rounded-2xl border border-slate-800">
+    {% endif %}
+    <div class="whitespace-pre-wrap leading-relaxed">{{ idea.writeup }}</div>
+    <h3 class="pt-2 text-xl font-semibold">✨ Here is where you start</h3>
+    <p>{{ idea.where_to_start }}</p>
+    <details class="pt-2">
+      <summary class="cursor-pointer text-slate-400">Research notes &amp; sources</summary>
+      <div class="mt-2 whitespace-pre-wrap text-slate-400">{{ idea.research }}</div>
+      {% if idea.sources %}
+      <h4 class="mt-4 font-semibold">Sources</h4>
+      <ol class="mt-2 list-decimal space-y-1 pl-5 text-slate-400">
+        {% for source in idea.sources %}
+        <li>
+          <a href="{{ source.url }}" target="_blank" rel="noopener"
+             class="text-sky-400 hover:underline">{{ source.title or source.url }}</a>
+        </li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+    </details>
+  </article>
+</div>
+{% endif %}

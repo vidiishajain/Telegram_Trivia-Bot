@@ -1,0 +1,11 @@
+# Keep the image small and never ship secrets or local cruft.
+.venv
+.git
+.env
+logs/
+ideas/
+__pycache__/
+*.py[oc]
+.pytest_cache/
+.ruff_cache/
+.DS_Store

@@ -1,0 +1,76 @@
+[project]
+name = "agent"
+version = "0.1.0"
+description = "An AI agent starter — built the opinionated way."
+readme = "README.md"
+authors = [
+    { name = "gs", email = "george.strakhov@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "aioboto3>=15.5.0",
+    "asyncpg>=0.31.0",
+    "fal-client>=1.0.0",
+    "fastapi[standard-no-fastapi-cloud-cli]>=0.136.3",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "pydantic-ai-slim[openrouter]>=1.104.0",
+    "pydantic-settings>=2.14.1",
+    "python-dotenv>=1.2.2",
+    "rich>=15.0.0",
+    "tqdm>=4.67.3",
+]
+
+[project.scripts]
+# Run the example agent with `uv run agent`.
+agent = "agent.main:main"
+# Check your setup with `uv run agent-doctor`.
+agent-doctor = "agent.doctor:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.409",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.15.15",
+]
+
+# ----------------------------------------------------------------------------
+# Tooling config. You normally don't need to touch this.
+# ----------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# A friendly-but-strict default set: pyflakes (F), pycodestyle (E/W),
+# isort (I), pyupgrade (UP), flake8-bugbear (B), and a few more.
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "ASYNC"]
+
+[tool.pyright]
+# Type-check the code you write. Strong typing is a feature here, not a chore.
+include = ["src", "scripts", "examples"]
+typeCheckingMode = "standard"
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+# asyncio_mode = "auto" means you can write `async def test_...` with no decorator.
+asyncio_mode = "auto"
+# One event loop for the whole session (like a real app has). Some clients
+# (fal_client, the cached embeddings client) bind to the loop they start on, so a
+# fresh loop per test would break them with "Event loop is closed".
+asyncio_default_test_loop_scope = "session"
+testpaths = ["scripts/tests"]
+# Fast/offline tests run by default. Live tests that hit real services are marked
+# "integration" and excluded here — run them explicitly with:  uv run pytest -m integration
+addopts = "-m 'not integration'"
+markers = [
+    "integration: exercises a real external service (needs credentials in .env)",
+]

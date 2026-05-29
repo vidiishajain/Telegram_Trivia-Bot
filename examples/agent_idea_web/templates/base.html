@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Agent Idea Generator{% endblock %}</title>
+  <!-- HTMX: dynamic updates with no JS. Tailwind: utility-class styling, no build.
+       Both are just CDN <script> tags — no toolchain. (Tailwind's CDN build is for
+       prototyping/teaching; a real production app would compile Tailwind ahead of time.) -->
+  <script src="https://unpkg.com/htmx.org@2.0.10/dist/htmx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased">
+  <main class="max-w-2xl mx-auto px-4 py-12">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

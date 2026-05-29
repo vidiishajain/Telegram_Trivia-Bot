@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/" class="text-sky-400 hover:underline">← start over</a>
+<h1 class="mt-2 text-3xl font-bold">Your agent idea</h1>
+<p class="mt-1 text-slate-400">For: <em>{{ idea.domain }}</em></p>
+
+<!-- This div fetches the fragment on load and then every 2s. The server stops the
+     polling by returning content without the hx-trigger once the job is done. -->
+<div id="live"
+     hx-get="/agentidea/{{ idea.id }}/fragment"
+     hx-trigger="load, every 2s"
+     hx-swap="outerHTML"
+     class="mt-8">
+  <div class="flex items-center gap-3 text-lg">
+    <span class="inline-block size-5 animate-spin rounded-full border-2 border-slate-700 border-t-sky-400"></span>
+    <span>Starting…</span>
+  </div>
+</div>
+{% endblock %}

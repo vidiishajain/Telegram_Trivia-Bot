@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-3xl font-bold">🤖 Agent Idea Generator</h1>
+<p class="mt-2 text-slate-400">
+  Tell me a problem you'd like to solve, and in which domain of life. I'll research it,
+  sketch an agent you could build, and draw you a diagram.
+</p>
+<form method="post" action="/agentidea" class="mt-6 space-y-3">
+  <textarea name="domain" rows="3" required
+    class="w-full rounded-xl border border-slate-700 bg-slate-900 p-4 text-slate-100
+           placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+    placeholder="e.g. helping elderly people stay socially connected"></textarea>
+  <button type="submit"
+    class="w-full rounded-xl bg-sky-600 px-4 py-3 font-semibold hover:bg-sky-500 transition">
+    Generate an idea →
+  </button>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets — NEVER commit your real .env
+.env
+
+# Logs (written at runtime)
+logs/
+
+# Demo output
+ideas/
+
+# Caches
+.pytest_cache/
+.ruff_cache/
