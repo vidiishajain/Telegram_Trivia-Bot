@@ -6,19 +6,24 @@ project's services (`from agent.services import ...`); they don't reinvent anyth
 
 Both need credentials in `.env` (run `uv run agent-doctor` to check).
 
-## 1. `build_an_agent.py` — a terminal app (CLI / TUI)
+Each example is a **folder with its own `docs/`** — filled-in `problem.md`, `user_stories.md`,
+`failure_modes.md`, `scenarios.md`, `policy.md`, `architecture.md`, `learnings.md`. Those are
+**worked examples of the method** (CLAUDE.md): read them to see what a real, filled-in design
+doc looks like before you write your own.
+
+## 1. `build_an_agent/` — a terminal app (CLI / TUI)
 
 Asks what kind of agent you'd like to build, then: researches the topic with Perplexity
 Sonar, has Claude turn it into a fun, *typed* suggestion, prints it nicely with `rich`,
 and saves it as Markdown.
 
 ```bash
-uv run python examples/build_an_agent.py
+uv run python examples/build_an_agent/main.py
 ```
 
 **What to learn from it:** a two-model pipeline (research → write), a Pydantic
 `output_type` for structured results, and a clean terminal UI with `rich`. Needs only
-`OPENROUTER_API_KEY`.
+`OPENROUTER_API_KEY`. Design docs: `examples/build_an_agent/docs/`.
 
 ## 2. `agent_idea_web/` — a small web app (the kitchen sink)
 
@@ -33,7 +38,7 @@ uv run fastapi dev examples/agent_idea_web/app.py
 
 Needs `OPENROUTER_API_KEY`, `FAL_KEY`, the `R2_*` keys, and `DATABASE_URL`. Front-end is
 Jinja2 + HTMX + Tailwind, all via CDN — no build step. Set `APP_PASSWORD` to put it behind
-a login (see Pattern C).
+a login (see Pattern C). Design docs: `examples/agent_idea_web/docs/`.
 
 ---
 

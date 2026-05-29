@@ -90,9 +90,13 @@ async def get_idea(idea_id: str) -> AgentIdea | None:
     if row is None:
         return None
     data = dict(row)
-    # asyncpg hands back jsonb columns as a JSON string; turn it into objects.
-    if isinstance(data.get("sources"), str):
-        data["sources"] = json.loads(data["sources"])
+    # `sources` is a jsonb column. asyncpg returns it as a JSON string once set, or
+    # None on a fresh row (before research runs). Normalize both to a list.
+    raw_sources = data.get("sources")
+    if isinstance(raw_sources, str):
+        data["sources"] = json.loads(raw_sources)
+    elif raw_sources is None:
+        data["sources"] = []
     return AgentIdea(**data)
 
 

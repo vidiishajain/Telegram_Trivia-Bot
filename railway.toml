@@ -1,0 +1,9 @@
+# Deploy config for THIS deployment (the agent-idea web demo).
+# The Dockerfile's default command runs src/agent/web.py; this overrides it to run
+# Example 2 instead.
+#
+# NOTE: Railway runs startCommand WITHOUT a shell, so "$PORT" would NOT expand.
+# We don't pass --port at all — `fastapi run` reads the PORT env var that Railway
+# injects, and already defaults --host to 0.0.0.0.
+[deploy]
+startCommand = "fastapi run examples/agent_idea_web/app.py"

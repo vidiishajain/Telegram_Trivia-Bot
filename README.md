@@ -48,8 +48,9 @@ uv run agent
 - **Database** via Neon Postgres — async, with a tiny built-in migration runner and `pgvector` for embeddings.
 - **Logging** to console + `logs/agent.log`, a **doctor** to check your setup, and a clean **CLI** and **web** (FastAPI + HTMX + Tailwind) starting point.
 
-Two runnable demos live in [`examples/`](examples/) — read them, run them, then delete them:
-- `examples/build_an_agent.py` — a terminal app that suggests an agent for you to build.
+Two runnable demos live in [`examples/`](examples/) — read them, run them, then delete them.
+Each is a folder with its own `docs/` showing the method filled in for a real project:
+- `examples/build_an_agent/` — a terminal app that suggests an agent for you to build.
 - `examples/agent_idea_web/` — a small web app: research → write-up → diagram → saved & shareable.
 
 ## How you build (the method)
