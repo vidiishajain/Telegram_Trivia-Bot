@@ -33,6 +33,20 @@ OK = "[green]✓[/green]"
 BAD = "[red]✗[/red]"
 NA = "[dim]–[/dim]"
 
+# The original starter repo. If `origin` points here, the user forgot to fork.
+UPSTREAM_REPO = "MotherOfAgents/agent-starter-python"
+
+
+def _git_remote() -> str | None:
+    """The `origin` remote URL, or None if there's no git repo / no origin."""
+    try:
+        result = subprocess.run(
+            ["git", "remote", "get-url", "origin"], capture_output=True, text=True, timeout=5
+        )
+    except Exception:
+        return None
+    return result.stdout.strip() if result.returncode == 0 else None
+
 
 def _section(title: str) -> Table:
     table = Table(
@@ -53,6 +67,19 @@ def check_environment() -> Table:
         table.add_row(OK, "uv", version)
     else:
         table.add_row(BAD, "uv", "not found on PATH — see https://docs.astral.sh/uv/")
+
+    remote = _git_remote()
+    if remote and UPSTREAM_REPO.lower() in remote.lower():
+        table.add_row(
+            BAD,
+            "Git remote",
+            f"this is the ORIGINAL starter ({UPSTREAM_REPO}) — fork it on GitHub and clone "
+            "your own fork, or you won't be able to save and push your work",
+        )
+    elif remote:
+        table.add_row(OK, "Git remote", remote)
+    else:
+        table.add_row(NA, "Git remote", "no 'origin' remote set yet")
     return table
 
 

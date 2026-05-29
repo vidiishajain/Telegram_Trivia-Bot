@@ -21,7 +21,15 @@ An opinionated, batteries-included starter for building AI agents — from simpl
 
 ## Quickstart
 
-You need [`uv`](https://docs.astral.sh/uv/) installed (it manages Python and dependencies). Then:
+**Fork this repo first — don't work in the original.** On GitHub click **Fork**, then clone
+*your* fork (if you clone the original, you won't be able to save and push your work):
+
+```bash
+git clone https://github.com/<your-username>/agent-starter-python.git
+cd agent-starter-python
+```
+
+You also need [`uv`](https://docs.astral.sh/uv/) installed (it manages Python and dependencies). Then:
 
 ```bash
 # 1. Install dependencies (uv reads the lockfile and sets up Python 3.12)
