@@ -78,6 +78,32 @@ class Settings(BaseSettings):
         description="Neon Postgres connection string. Needed for the db service.",
     )
 
+    # --- Telegram bot (required for the trivia bot) -------------------------
+    telegram_bot_token: str | None = Field(
+        default=None, description="Telegram Bot API token from @BotFather."
+    )
+    giphy_api_key: str | None = Field(default=None, description="Giphy API key for GIF search.")
+    # No telegram_group_id — the bot discovers chats dynamically.
+    # Group mode activates when /trivia is called in any group chat.
+    # Solo mode activates when a user DMs the bot.
+
+    # --- Trivia game settings -----------------------------------------------
+    trivia_answer_window_minutes: int = Field(
+        default=30, description="Minutes the answer window stays open after a round starts."
+    )
+    trivia_vote_window_minutes: int = Field(
+        default=5, description="Minutes group topic voting stays open before top topic wins."
+    )
+    trivia_questions_per_round: int = Field(default=5, description="Number of questions per round.")
+    trivia_season_length_days: int = Field(default=30, description="Days per season.")
+    trivia_playoff_top_n: int = Field(
+        default=4, description="Top N players who enter the season playoffs."
+    )
+    trivia_min_solo_window_minutes: int = Field(
+        default=30,
+        description="Min minutes left in today's solo window; bot declines if less.",
+    )
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -8,14 +8,32 @@ An opinionated, batteries-included starter for building AI agents — from simpl
 
 ## ✏️ Your project
 
-> Replace this section with *your* goal (this is stage 2 of the method — see below).
-> Keep it to a few sentences a friend would understand.
+**What I'm building:** A Telegram trivia bot with two modes — group competitive play and global solo ranked play — backed by ELO ratings, streaks, head-to-head rivalry records, and seasonal leaderboards with playoffs.
 
-**What I'm building:** _(one sentence)_
+**Who it's for:** Two audiences sharing one bot:
+- **Group players** — friend groups who want on-demand trivia battles in their existing Telegram group chat, with group-scoped ELO and rivalries.
+- **Solo players** — individuals who DM the bot privately and compete globally against every other solo player on a shared leaderboard.
 
-**Who it's for and why:** _(a sentence or two)_
+**What "done" looks like:**
 
-**What "done" looks like:** _(what can the user do that they couldn't before?)_
+*Group mode:* Someone types `/trivia` in a group chat. The bot posts 6 topic options with tap buttons. First topic to get >50% of the group's votes wins immediately — quiz starts. Five multiple-choice questions appear as one message. Players tap A/B/C/D over a 2-hour window. Results post automatically with ELO deltas and rivalry callouts. Seasons run 30 days, end with a playoff, soft-reset ELO, repeat.
+
+*Solo mode:* A user DMs the bot and presses Start. The bot explains the game and registers them. They type `/play` whenever ready. The bot delivers today's 5 questions one at a time — tap an answer, get instant feedback (correct/wrong + explanation), then the next question. At day's end, ELO updates globally across all solo players who played that day. Same soft-season rhythm as group mode.
+
+---
+
+## Build status
+
+| Phase | What | Status |
+|-------|------|--------|
+| 0 | Design docs (problem, stories, scenarios, policy, architecture) | ✅ Done |
+| 1 | Schema (migrations) + trivia_db.py + tests | ✅ Done — 13/13 tests green |
+| 2 | scoring.py + unit tests | ✅ Done — 14/14 tests green |
+| 3 | question_generator.py + integration test | ✅ Done — 5/5 tests green |
+| 4 | Bot shell — /start, /trivia, /play, voting mechanism | ✅ Done — ruff + pyright clean |
+| 5 | Round lifecycle — post → collect answers → score → results | ⬜ Pending |
+| 6 | Commands — /leaderboard, /me, /score, /rivalry, /help | ⬜ Pending |
+| 7 | Seasons + playoffs + Railway deploy | ⬜ Pending |
 
 ---
 
